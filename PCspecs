@@ -86,12 +86,11 @@ else
 	echo -e "null \t\t \c"
 fi
 
-speed="$(ifconfig $iface | grep -i "speed" | awk '{print $4}')"
-speed_check="$(ifconfig $iface | grep -i "speed" | awk '{print $3}')"
+speed=$(cat /sys/class/net/$iface/speed 2> /dev/null)
 
-if [[ -n $speed ]] && [[ $speed_check == "speed" ]];
+if [[ $speed ]]
 then
-	echo "$speed"
+	echo $speed
 else
 	echo "null"
 fi
